@@ -1,6 +1,7 @@
 class Destination {
   constructor(URL) {
     this.URL = URL;
+    // create container for hyperlink + remove button
     this.container = $("<div class='link-container'></div>")
     this.item = $("<a href=''></a>")
     
@@ -15,8 +16,7 @@ class Destination {
     this.delete.on('click', () => {
       browser.storage.local.remove(this.URL)
         .then(success => this.container.remove())
-        .then(console.log(`URL ${this.URL} successfully removed`))
-        .catch(err => console.log("Error removing URl link", err))
+        .catch(err => console.error("Error removing URl link", err))
     })
   }
 }
@@ -35,20 +35,19 @@ class Destination {
     e.preventDefault();
     const URL = $("#url-input").val();
     $("#url-input").val('')
-    console.log(URL)
     
     const newObj = {}
     newObj[URL] = URL;
     browser.storage.local.set(newObj)
       .then(_ => appendDestination(URL))
-      .catch(err => console.log("Error adding URL", err))
+      .catch(err => console.error("Error adding URL", err))
   }
 
   const appendDestination = (URL) => {
     const newDestination = new Destination(URL)
     $("#link-manager").append(newDestination.container)
-    console.log(`${URL} added successfully!`)
+    console.error(`${URL} added successfully!`)
   }
 
-  const openTab = url => browser.tabs.create({ url }).then(msg => console.log('success', msg), err => console.log('error', err))
+  const openTab = url => browser.tabs.create({ url }).then(msg => console.log('success', msg), err => console.error('error', err))
   
