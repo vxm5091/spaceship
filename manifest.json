@@ -1,0 +1,48 @@
+{
+  "manifest_version": 2,
+  "name": "Spaceship",
+  "version": "1.0",
+
+  "description": "mozilla extension that allows the user to input and save several URLs and open them all with a keyboard shortcut",
+
+  "icons": {
+    "48": "assets/spaceship.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.mozilla.org/*"],
+      "js": ["borderify.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab", "tabs", "storage"
+  ],
+  "browser_action": {
+    "default_icon": "assets/spaceship.png",
+    "default_title": "Spaceship",
+    "default_popup": "command-center.html"
+  },
+  "browser_specific_settings": {
+    "gecko":{
+      "id": "extensionname@example.org"
+    }
+  },
+  "commands": {
+    "liftoff": {
+      "suggested_key": {
+        "default": "Command+Shift+Period"
+      },
+      "description": "Send the spaceship off to Neptune (aka open all your tabs)"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+      "default": "Command+Shift+Comma"
+      },
+      "description": "Fuel up your spaceship (aka add/update your links)"
+}
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
